@@ -1,0 +1,1 @@
+yasm -f elf64 -g dwarf2 example.asm -l example.lst && ld -g -o example example.o

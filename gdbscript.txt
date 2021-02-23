@@ -1,0 +1,8 @@
+b last
+r
+x/5dw &lst1
+echo \n
+x/3dw &lst2
+echo \n
+x/11dw &lst3
+echo \n

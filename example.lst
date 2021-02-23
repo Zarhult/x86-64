@@ -1,0 +1,68 @@
+     1                                 %line 1+1 example.asm
+     2                                  EXIT_SUCCESS equ 0
+     3                                  SYS_exit equ 60
+     4                                 
+     5                                 %line 16+1 example.asm
+     6                                 
+     7                                 [section .data]
+     8 00000000 F501000017000000C5-     lst1 dd 501, 23, -59, 0, -209
+     9 00000000 FFFFFF000000002FFF-
+    10 00000000 FFFF               
+    11 00000014 05000000                len1 dd 5
+    12                                 
+    13 00000018 000000000000000000-     lst2 dd 0, 0, 0
+    14 00000018 000000             
+    15 00000024 03000000                len2 dd 3
+    16                                 
+    17 00000028 000000000100000002-     lst3 dd 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+    18 00000028 000000030000000400-
+    19 00000028 000005000000060000-
+    20 00000028 000700000008000000-
+    21 00000028 090000000A000000   
+    22 00000054 0B000000                len3 dd 11
+    23                                 
+    24                                 [section .text]
+    25                                 [global _start]
+    26                                 _start:
+    27 00000000 8B0C25[00000000]        mov ecx, dword [len1]
+    28                                 %line 30+0 example.asm
+    29 00000007 48C7C600000000          mov rsi, 0
+    30 0000000E BB02000000              mov ebx, 2
+    31                                 ..@3.lp:
+    32 00000013 48C7C000000000          mov rax, 0
+    33 0000001A 8B04B5[00000000]        mov eax, dword [lst1+(rsi*4)]
+    34 00000021 F7EB                    imul ebx
+    35 00000023 8904B5[00000000]        mov dword [lst1+(rsi*4)], eax
+    36 0000002A 48FFC6                  inc rsi
+    37 0000002D E2E2                    loop ..@3.lp
+    38                                 %line 31+1 example.asm
+    39 0000002F 8B0C25[00000000]        mov ecx, dword [len2]
+    40                                 %line 31+0 example.asm
+    41 00000036 48C7C600000000          mov rsi, 0
+    42 0000003D BB02000000              mov ebx, 2
+    43                                 ..@4.lp:
+    44 00000042 48C7C000000000          mov rax, 0
+    45 00000049 8B04B5[00000000]        mov eax, dword [lst2+(rsi*4)]
+    46 00000050 F7EB                    imul ebx
+    47 00000052 8904B5[00000000]        mov dword [lst2+(rsi*4)], eax
+    48 00000059 48FFC6                  inc rsi
+    49 0000005C E2E2                    loop ..@4.lp
+    50                                 %line 32+1 example.asm
+    51 0000005E 8B0C25[00000000]        mov ecx, dword [len3]
+    52                                 %line 32+0 example.asm
+    53 00000065 48C7C600000000          mov rsi, 0
+    54 0000006C BB02000000              mov ebx, 2
+    55                                 ..@5.lp:
+    56 00000071 48C7C000000000          mov rax, 0
+    57 00000078 8B04B5[00000000]        mov eax, dword [lst3+(rsi*4)]
+    58 0000007F F7EB                    imul ebx
+    59 00000081 8904B5[00000000]        mov dword [lst3+(rsi*4)], eax
+    60 00000088 48FFC6                  inc rsi
+    61 0000008B E2E2                    loop ..@5.lp
+    62                                 %line 33+1 example.asm
+    63                                 
+    64                                 last:
+    65 0000008D 48C7C03C000000          mov rax, SYS_exit
+    66 00000094 48C7C700000000          mov rdi, EXIT_SUCCESS
+    67 0000009B 0F05                    syscall
+    68                                 
