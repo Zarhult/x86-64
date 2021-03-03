@@ -6,3 +6,5 @@ x/3dw &lst2
 echo \n
 x/11dw &lst3
 echo \n
+p $rax
+echo \n
